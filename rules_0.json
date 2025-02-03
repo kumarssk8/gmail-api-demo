@@ -1,0 +1,22 @@
+{
+    "rule1" : {
+        "predicate" : "ANY",
+        "filter": [
+            {
+                "field" : "from_address",
+                "condition" : "contains",
+                "value" : "hirist" 
+            },
+            {
+                "field" : "subject",
+                "condition" : "contains",
+                "value" : "new"
+            }
+        ],
+        "actions":[
+            {
+                "name" : "mark_as_read"
+            }
+        ]
+    }
+}
