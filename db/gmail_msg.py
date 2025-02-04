@@ -9,13 +9,14 @@ class GmailMsg:
         self._table_name = "gmail_msgs" # table name in db
     
     def insert(self, data):
-        print(data)
+        # print(data)
         try:
             insert_query = f"insert ignore into {self._table_name} (msg_id, thread_id, date_received, internal_date, subject, from_address, body) values (%(msg_id)s, %(thread_id)s, %(date_received)s, %(internal_date)s, %(subject)s, %(from_address)s, %(body)s)"
             
             mysql_connection = Connection().get()
             mysql_connection.cursor().executemany(insert_query, data)
             mysql_connection.commit()
+            print("Buk Insert completed")
         except Exception as ex:
             print(ex)
             raise ex

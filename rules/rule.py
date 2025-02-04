@@ -12,11 +12,12 @@ class Rule(ABC):
         return self._name
     
     def execute(self):
-        msg_ids = self.filter_results()
+        condition = self.get_condition()
+        msg_ids = GmailMsg().select_msg_ids(condition)
         self.perform_actions(msg_ids)
 
     @abstractmethod
-    def filter_results(self):
+    def get_condition(self):
         pass
 
     def perform_actions(self, msg_ids):
@@ -26,15 +27,15 @@ class Rule(ABC):
 
 class AllRule(Rule):
 
-    def filter_results(self):
+    def get_condition(self):
         conditions = [r.derive_condition() for r in self._filters]
-        return GmailMsg().select_msg_ids(" and ".join(conditions))
+        return " and ".join(conditions)
 
 
 class AnyRule(Rule):
 
-    def filter_results(self):
+    def get_condition(self):
         conditions = [r.derive_condition() for r in self._filters]
-        return GmailMsg().select_msg_ids(" or ".join(conditions))
+        return " or ".join(conditions)
 
     

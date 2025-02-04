@@ -28,5 +28,5 @@ if __name__ == "__main__":
 
     gmail_api_demo = GmailApiDemo()
     gmail_api_demo.fetch_emails()
-    gmail_api_demo.execute_rule("rules_0.json")
+    #gmail_api_demo.execute_rule("rules_0.json")
 

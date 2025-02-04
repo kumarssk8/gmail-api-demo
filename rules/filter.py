@@ -48,7 +48,7 @@ class DateFilter(Filter):
         print(f"filtered data {filter_date}")
 
         if self._condition == "less_than":
-            return f"{self._field} < {filter_date}"
+            return f'{self._field} < "{filter_date}"'
         else:
-            return f"{self._field} > {filter_date}"
+            return f'{self._field} > "{filter_date}"'
          

@@ -21,7 +21,7 @@ class MoveMessageActions(Actions):
         
         body = {'ids' : msg_ids, 'addLabelIds' : [self._label] }
         try:
-            resp = GmailService.get().users().messages().batchModify(userId='me', body=body).execute()
+            GmailService.batch_modify(body)
             print(f"Moved message to label {self._label} " + ",".join(msg_ids))
         except Exception as ex:
             print(f'Bulk mark to move to label {self._label} failed : {ex}')
@@ -37,7 +37,7 @@ class MarkAsReadActions(Actions):
     
         body = {'ids' : msg_ids, 'removeLabelIds' : ['UNREAD']}
         try:
-            resp = GmailService.get().users().messages().batchModify(userId='me', body=body).execute()
+            GmailService.batch_modify(body)
             print("Marked message as read for " + ",".join(msg_ids))
         except Exception as ex:
             print(f'Bulk mark as read failed {ex}')

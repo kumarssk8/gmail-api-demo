@@ -45,3 +45,8 @@ class GmailService:
         if cls.instance is not None:
             return cls.instance
         return cls.initialize()
+
+    @classmethod
+    def batch_modify(cls, body):
+        return cls.get().users().messages().batchModify(userId='me', body=body).execute()
+        
