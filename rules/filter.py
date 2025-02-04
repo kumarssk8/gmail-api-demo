@@ -13,17 +13,20 @@ class Filter(ABC):
         pass
 
 class StringFilter(Filter):
-    
+    def __init__(self, field, condition, value):
+        super().__init__(field, condition, value)
+        self._condition_map = {
+                "contains": f'{self._field} like "%{self._value}%"',
+                "does_not_contain": f'{self._field} not like "%{self._value}%"',
+                "equals": f'{self._field} = "{self._value}"',
+                "does_not_equal": f'{self._field} != "{self._value}"'
+            }
+        
     def derive_condition(self):
-        condition_map = {
-            "contains": f'{self._field} like "%{self._value}%"',
-            "does_not_contain": f'{self._field} not like "%{self._value}%"',
-            "equals": f'{self._field} = "{self._value}"',
-            "does_not_equal": f'{self._field} != "{self._value}"'
-        }
-        if self._condition not in condition_map:
+        
+        if self._condition not in self._condition_map:
             raise RuntimeError(f'String condition {self._condition} not present')
-        return condition_map[self._condition]
+        return self._condition_map[self._condition]
 
 class DateFilter(Filter):
     def __init__(self, field, condition, value, units):

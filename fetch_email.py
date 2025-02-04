@@ -11,23 +11,24 @@ from db.gmail_msg import GmailMsg
 
 class FetchEmail:
 
-    # time constraint as input to this method??
+    # iterates only specified no of times to fetch results using pagination,
+    # as most of the account will have large no of emails
     def execute(self):
-        while True:
-            next_page_token=""
+        next_page_token=""
+        for i in range(5): 
             try:
+                print("page token " + next_page_token)
                 results = GmailService.get().users().messages().list(userId="me", 
-                                                                     maxResults=10, 
+                                                                     maxResults=50, 
                                                                      pageToken=next_page_token).execute()
                 print(len(results["messages"]))
                 insert_mail_details = []
                 for msg in results["messages"]:
-                    print(msg["id"])
                     msg = GmailService.get().users().messages().get(userId="me", id=msg["id"]).execute()
                     internal_date = str(datetime.fromtimestamp(int(msg["internalDate"])/1000).strftime('%Y-%m-%d %H:%M:%S'))
                     mail_details = {"msg_id": msg["id"], "thread_id": msg["threadId"], "internal_date": internal_date}
-                    self._get_header(msg["payload"]["headers"], mail_details)
                     try:
+                        self._get_header(msg["payload"]["headers"], mail_details)
                         for part in msg["payload"]["parts"]:
                             if 'body' in part and 'data' in part["body"]:
                                 body_data = part["body"]["data"]
@@ -38,7 +39,8 @@ class FetchEmail:
                                 mail_details["body"]=""
                     except Exception as ex:
                         mail_details["body"] = ""
-                        print("Unable to get body for msg id " + msg["id"])
+                        print(msg)
+                        print("processing error for msg id " + msg["id"])
 
                     insert_mail_details.append(mail_details)
                 GmailMsg().insert(insert_mail_details)
@@ -57,5 +59,9 @@ class FetchEmail:
             elif item["name"] == "Subject":
                 mail_details["subject"]= item["value"]
             elif item["name"] == "Date":
-                mail_details["date_received"] = datetime.strptime(item["value"].split(" (")[0], "%a, %d %b %Y %H:%M:%S %z").strftime("%Y-%m-%d %H:%M:%S")
+                try:
+                    mail_details["date_received"] = datetime.strptime(item["value"].split(" (")[0], "%a, %d %b %Y %H:%M:%S %z").strftime("%Y-%m-%d %H:%M:%S")
+                except Exception as ex:
+                    print(ex)
+                    mail_details["date_received"]=""
 
