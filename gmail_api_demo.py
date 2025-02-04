@@ -21,8 +21,13 @@ class GmailApiDemo:
         
 
 if __name__ == "__main__":
-
     gmail_api_demo = GmailApiDemo()
-    gmail_api_demo.fetch_emails()
-    gmail_api_demo.execute_rule("rules_0.json")
+    inp = input("Do you want to fetch emails (y/n): ").strip().lower()
+    if inp == 'y' :
+        print("Fetching emails")
+        gmail_api_demo.fetch_emails()
+    inp = input("Do you want to execute workflow (y/n): ").strip().lower()
+    if inp == 'y':
+        file_name = input("Filename: ").strip().lower()
+        gmail_api_demo.execute_rule(file_name)
 
