@@ -1,9 +1,7 @@
 import os, json
 
 from fetch_email import FetchEmail
-from db.gmail_msg  import GmailMsg
-
-from rules.rule_parser import *
+from rules.rule_parser import RuleParser
 
 os.environ["hf_mysql_host"]="127.0.0.1"
 os.environ["hf_mysql_user"] = "root"
@@ -21,7 +19,6 @@ class GmailApiDemo:
         with open(file_name, 'r') as file:
             json_data = json.load(file)
         
-        print(json_data)
         rules = RuleParser().create_rules(json_data)
         for r in rules:
             r.execute()

@@ -1,0 +1,12 @@
+# gmail client
+google-api-python-client 
+google-auth-httplib2 
+google-auth-oauthlib
+
+# to remove html content from email
+requests
+html5lib
+bs4
+
+# mysql connector
+mysql-connector-python

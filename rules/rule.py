@@ -13,7 +13,6 @@ class Rule(ABC):
     
     def execute(self):
         msg_ids = self.filter_results()
-        print(msg_ids)
         self.perform_actions(msg_ids)
 
     @abstractmethod

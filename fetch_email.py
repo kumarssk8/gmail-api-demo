@@ -31,9 +31,9 @@ class FetchEmail:
                     mail_details["body"] = ""
                     print("Unable to get body for msg id " + msg["id"])
 
-                print(mail_details)
+                # print(mail_details)
                 insert_mail_details.append(mail_details)
-                print("-------")
+                # print("-------")
 
             print(results["nextPageToken"])
             print(results["resultSizeEstimate"])
