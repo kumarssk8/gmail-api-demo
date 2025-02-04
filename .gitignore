@@ -1,2 +1,7 @@
 credentials.json
 token.json
+
+__pycache__/
+db/__pycache__/
+rules/__pycache__/
+tests/__pycache__/

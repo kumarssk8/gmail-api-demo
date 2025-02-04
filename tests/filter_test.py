@@ -40,19 +40,19 @@ class TestFilter(unittest.TestCase):
         filter_date = date.today() + timedelta(days=-value)
         self.assertEqual(condition, f'date_received > "{filter_date}"', "date filter less than check failed")
     
-    # def test_date_less_than_filter_months(self):
-    #     value = 2
-    #     date_filter = DateFilter("date_received", "less_than", value, "month(s)")
-    #     condition = date_filter.derive_condition()
-    #     filter_date = date.today() + relativedelta(month=-value)
-    #     self.assertEqual(condition, f'date_received < "{filter_date}"', "date filter less than check failed")
+    def test_date_less_than_filter_months(self):
+        value = 2
+        date_filter = DateFilter("date_received", "less_than", value, "month(s)")
+        condition = date_filter.derive_condition()
+        filter_date = date.today() + relativedelta(months=-value)
+        self.assertEqual(condition, f'date_received < "{filter_date}"', "date filter less than check failed")
     
-    # def test_date_greater_than_filter_months(self):
-    #     value = 2
-    #     date_filter = DateFilter("date_received", "greater_than", value, "month(s)")
-    #     condition = date_filter.derive_condition()
-    #     filter_date = date.today() + relativedelta(month=-value)
-    #     self.assertEqual(condition, f'date_received > "{filter_date}"', "date filter less than check failed")
+    def test_date_greater_than_filter_months(self):
+        value = 2
+        date_filter = DateFilter("date_received", "greater_than", value, "month(s)")
+        condition = date_filter.derive_condition()
+        filter_date = date.today() + relativedelta(months=-value)
+        self.assertEqual(condition, f'date_received > "{filter_date}"', "date filter less than check failed")
 
 
 

@@ -43,7 +43,7 @@ class DateFilter(Filter):
         if self._units not in self._units_condition:
             raise RuntimeError(f"Invalid units {self._units}. Allowed units {self._units_condition}")
         
-        filter_date = date.today() + (relativedelta(month=-self._value) if self._units_condition == "month(s)" else timedelta(days=-self._value)) 
+        filter_date = date.today() +  (relativedelta(months=-self._value) if self._units == "month(s)" else timedelta(days=-self._value))
         
         print(f"filtered data {filter_date}")
 
