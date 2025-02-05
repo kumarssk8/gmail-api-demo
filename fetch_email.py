@@ -17,14 +17,11 @@ class FetchEmail:
         next_page_token=""
         for i in range(5): 
             try:
-                print("page token " + next_page_token)
-                results = GmailService.get().users().messages().list(userId="me", 
-                                                                     maxResults=50, 
-                                                                     pageToken=next_page_token).execute()
+                results = GmailService.list_msgs(max_results=10, page_token=next_page_token)
                 print(len(results["messages"]))
                 insert_mail_details = []
                 for msg in results["messages"]:
-                    msg = GmailService.get().users().messages().get(userId="me", id=msg["id"]).execute()
+                    msg = GmailService.retrieve_msg(msg["id"])
                     internal_date = str(datetime.fromtimestamp(int(msg["internalDate"])/1000).strftime('%Y-%m-%d %H:%M:%S'))
                     mail_details = {"msg_id": msg["id"], "thread_id": msg["threadId"], "internal_date": internal_date}
                     try:
@@ -39,8 +36,9 @@ class FetchEmail:
                                 mail_details["body"]=""
                     except Exception as ex:
                         mail_details["body"] = ""
-                        print(msg)
                         print("processing error for msg id " + msg["id"])
+                        print(msg)
+
 
                     insert_mail_details.append(mail_details)
                 GmailMsg().insert(insert_mail_details)

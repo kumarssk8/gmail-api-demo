@@ -49,4 +49,11 @@ class GmailService:
     @classmethod
     def batch_modify(cls, body):
         return cls.get().users().messages().batchModify(userId='me', body=body).execute()
+    
+    @classmethod
+    def list_msgs(cls,max_results=10, page_token=None):
+        return cls.get().users().messages().list(userId="me", maxResults=max_results, pageToken=page_token).execute()
         
+    @classmethod
+    def retrieve_msg(cls, msg_id):
+        return cls.get().users().messages().get(userId="me", id=msg_id).execute()

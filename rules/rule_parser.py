@@ -14,12 +14,15 @@ class RuleParser:
             for k,v in json_data.items()
         ]
 
+    
+    string_fields = ["from_address", "subject"]
+    date_fields = ["date_received"]
 
     def create_filters(self, json_data):
         field = json_data.get("field")
-        if( field == "from_address" or field == "subject"):
+        if( field in self.string_fields):
             return StringFilter(field, json_data["condition"], json_data["value"])
-        elif(field == "date_received"):
+        elif(field in self.date_fields):
             return DateFilter(field, json_data["condition"], json_data["value"], json_data["unit"])
         else:
             raise RuntimeError("Unhandled field " + field)

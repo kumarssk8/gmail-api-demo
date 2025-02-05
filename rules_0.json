@@ -1,16 +1,17 @@
 {
     "rule1" : {
-        "predicate" : "ANY",
+        "predicate" : "ALL",
         "filter": [
-            {
-                "field" : "from_address",
-                "condition" : "contains",
-                "value" : "hirist" 
-            },
             {
                 "field" : "subject",
                 "condition" : "contains",
-                "value" : "new"
+                "value" : "MicroStrategy's MSTR Plan"
+            },
+            {
+                "field" : "date_received",
+                "condition" : "less_than",
+                "value" : 7,
+                "unit" : "day(s)"
             }
         ],
         "actions":[

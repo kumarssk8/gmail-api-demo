@@ -1,4 +1,4 @@
-import os, json
+import json
 
 from db_config import *
 from fetch_email import FetchEmail

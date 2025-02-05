@@ -23,7 +23,6 @@ class StringFilter(Filter):
             }
         
     def derive_condition(self):
-        
         if self._condition not in self._condition_map:
             raise RuntimeError(f'String condition {self._condition} not present')
         return self._condition_map[self._condition]
@@ -51,7 +50,7 @@ class DateFilter(Filter):
         print(f"filtered data {filter_date}")
 
         if self._condition == "less_than":
-            return f'{self._field} < "{filter_date}"'
-        else:
             return f'{self._field} > "{filter_date}"'
+        else:
+            return f'{self._field} < "{filter_date}"'
          
